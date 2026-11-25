@@ -1,32 +1,30 @@
 import { siteConfig } from '@/content/site.config';
 import { products } from '@/content/products';
 import { formatPrice } from '@/lib/format';
+import { LanternReveal } from '@/components/motion/LanternReveal';
+import { MagneticButton } from '@/components/motion/MagneticButton';
 
-/** Temporary home (Stage 4 · Task 1): proves fonts, tokens and content load. Replaced by the real hero in Task 3. */
+/** Temporary home (Stage 4 · Tasks 1–2): proves fonts, tokens and content load. Replaced by the real hero in Task 3. */
 export default function Home() {
   const { brand } = siteConfig;
   const featured = products.filter((p) => p.featured).slice(0, 3);
 
   return (
-    <main className="container-page section-space">
-      <img src="/brand/kaasth-horizontal-reversed-transparent.svg" alt={`${brand.name} logo`} width={260} height={64} className="h-14 w-auto" />
-
+    <main className="container-page pb-[var(--section-space)] pt-40">
       <p className="mt-16 font-deva text-heading02 text-brand-accent-strong">
         {brand.collections.heirloom.nameDeva} · {brand.collections.form.nameDeva}
       </p>
-      <h1 className="mt-4 text-hero01">
+      <LanternReveal as="h1" className="mt-4 text-hero01" onScroll={false}>
         Made to be <em className="text-brand-accent-strong">inherited.</em>
-      </h1>
+      </LanternReveal>
       <p className="mt-6 max-w-[62ch]">
         Hand-carved heirlooms and modern solid wood, from one {brand.city} workshop since {brand.established}.
       </p>
 
       <div className="mt-10 flex flex-wrap items-center gap-4">
-        <a href="#" className="rounded-pill bg-brand-accent px-6 py-4 text-caption01 font-medium uppercase tracking-[0.14em] text-background">
-          Book a showroom visit
-        </a>
-        <a href="#" className="rounded-pill border border-brand-accent px-6 py-4 text-caption01 font-medium uppercase tracking-[0.14em] text-brand-accent-strong">
-          Book a visit
+        <MagneticButton href="/contact#book">Book a showroom visit</MagneticButton>
+        <a href="/products" className="rounded-pill border border-brand-accent px-6 py-4 text-caption01 font-medium uppercase tracking-[0.14em] text-brand-accent-strong">
+          Explore 24 pieces
         </a>
       </div>
 
@@ -41,9 +39,6 @@ export default function Home() {
         ))}
       </ul>
 
-      <footer className="mt-24 border-t border-border-subtle pt-6 text-caption02 uppercase tracking-[0.2em] text-foreground-subtle">
-        {siteConfig.demoBadge} · {siteConfig.credit} · Stage 4 · Task 1 scaffold
-      </footer>
     </main>
   );
 }

@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from 'next';
+import { connection } from 'next/server';
 import { cormorant, instrument, tiro } from './fonts';
 import { siteConfig } from '@/content/site.config';
+import { Nav } from '@/components/shell/Nav';
+import { Footer } from '@/components/shell/Footer';
+import { DemoBadge } from '@/components/shell/DemoBadge';
+import { SmoothScroll } from '@/components/effects/SmoothScroll';
+import { SmokeCursor } from '@/components/effects/SmokeCursor';
+import { CursorDot } from '@/components/effects/CursorDot';
+import { Grain } from '@/components/effects/Grain';
 import './globals.css';
 
 const { brand } = siteConfig;
@@ -15,10 +23,24 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: '#120d09' };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Render per request so Next.js can stamp the CSP nonce on its scripts (see src/proxy.ts).
+  await connection();
   return (
     <html lang="en" className={`${cormorant.variable} ${instrument.variable} ${tiro.variable}`}>
-      <body>{children}</body>
+      <body>
+        <a href="#main" className="sr-only z-[90] rounded-pill bg-brand-accent px-4 py-2 text-background focus:not-sr-only focus:fixed focus:left-4 focus:top-4">
+          Skip to content
+        </a>
+        <SmoothScroll />
+        <Nav />
+        <div id="main">{children}</div>
+        <Footer />
+        <DemoBadge />
+        <Grain />
+        <SmokeCursor />
+        <CursorDot />
+      </body>
     </html>
   );
 }
