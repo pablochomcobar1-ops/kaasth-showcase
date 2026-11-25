@@ -1,0 +1,66 @@
+/* Kaasth · Haveli Nights · design tokens (Tailwind CSS v4)
+   Designed & built by BSX Agency. Paste into app/globals.css after @import "tailwindcss"; */
+@theme inline {
+  /* Colour: semantic only */
+  --color-background: #120d09;            /* night: page */
+  --color-background-secondary: #1a130d;  /* sections that alternate */
+  --color-background-tertiary: #241a12;   /* raised: cards, menus */
+  --color-paper: #f3ece0;                 /* Wood Passport card, light moments */
+  --color-foreground: #f3ece0;            /* ivory text 16.4:1 */
+  --color-foreground-secondary: #cfc3ae;  /* body text 11.1:1 */
+  --color-foreground-subtle: #9d917c;     /* captions 6.2:1 */
+  --color-foreground-on-paper: #3a2418;   /* walnut on paper 12.4:1 */
+  --color-brand: #3a2418;                 /* walnut (logo) */
+  --color-brand-accent: #c9a46a;          /* brass: buttons, rules 8.3:1 */
+  --color-brand-accent-strong: #e9c88f;   /* brass light: italics, hover, focus */
+  --color-border: #3a2c1f;
+  --color-border-subtle: #2a2017;
+  --color-focus-ring: #e9c88f;
+  --color-success: #8fb98b;
+  --color-warning: #e0a458;
+  --color-error: #e07a5f;
+
+  /* Fonts (load with next/font/google; all SIL OFL) */
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Instrument Sans", system-ui, sans-serif;
+  --font-deva: "Tiro Devanagari Hindi", "Noto Serif Devanagari", serif;
+
+  /* Type scale: 01 = largest. Fluid between 375px and 1440px */
+  --text-hero01: clamp(3rem, 1.9rem + 4.7vw, 6rem);       /* 48 → 96 */
+  --text-hero02: clamp(2.5rem, 1.7rem + 3.4vw, 4.5rem);   /* 40 → 72 */
+  --text-heading01: clamp(2rem, 1.55rem + 1.9vw, 3.25rem);/* 32 → 52 */
+  --text-heading02: clamp(1.5rem, 1.25rem + 1.1vw, 2.25rem);
+  --text-heading03: 1.375rem;
+  --text-body01: 1.0625rem;   /* 17px, line-height 1.6 */
+  --text-body02: 0.9375rem;   /* 15px */
+  --text-caption01: 0.8125rem;/* 13px, uppercase, tracking .16em */
+  --text-caption02: 0.6875rem;/* 11px, uppercase, tracking .2em */
+  --text-deva-display: clamp(6rem, 3rem + 18vw, 25rem);   /* giant faint काष्ठ */
+
+  /* Radius */
+  --radius-card: 6px;
+  --radius-pill: 999px;
+
+  /* Shadow / glow */
+  --shadow-card: 0 24px 60px rgb(0 0 0 / 0.45);
+  --shadow-brass-glow: 0 0 40px rgb(201 164 106 / 0.25);
+
+  /* Motion */
+  --ease-unveil: cubic-bezier(0.16, 1, 0.3, 1);     /* expo-out: reveals */
+  --ease-drift: cubic-bezier(0.65, 0, 0.35, 1);     /* in-out: crossfades, curtains */
+  --ease-press: cubic-bezier(0.2, 0, 0, 1);         /* buttons */
+  --duration-micro: 180ms;
+  --duration-ui: 320ms;
+  --duration-reveal: 900ms;
+  --duration-cinematic: 1400ms;
+}
+
+:root {
+  --section-space: clamp(80px, 10vw, 144px);   /* one vertical rhythm, every seam */
+  --gutter: clamp(20px, 4vw, 48px);            /* container padding-inline */
+  --container: 1320px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-reveal: 1ms; --duration-cinematic: 1ms; }
+}
