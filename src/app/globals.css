@@ -232,3 +232,14 @@
 @keyframes sheet-in { from { transform: translateY(100%); } }
 @keyframes pop-in { from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); } }
 @media (prefers-reduced-motion: reduce) { .dialog-overlay, .dialog-panel { animation: none; } }
+
+/* ---------- Contact (Task 9) ---------- */
+.slot-chip span {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border); color: var(--color-foreground-secondary); cursor: pointer;
+  transition: background-color var(--duration-micro) var(--ease-press), color var(--duration-micro) var(--ease-press), border-color var(--duration-micro) var(--ease-press);
+}
+.slot-chip:hover span { border-color: var(--color-brand-accent); color: var(--color-foreground); }
+.slot-chip input:checked + span { background: var(--color-brand-accent); border-color: var(--color-brand-accent); color: var(--color-background); }
+.slot-chip input:focus-visible + span { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+fieldset[aria-invalid='true'] .slot-chip span { border-color: var(--color-error); }

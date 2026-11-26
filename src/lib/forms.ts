@@ -1,8 +1,10 @@
 import { z } from 'zod';
+import { visitDateError } from './visit-date';
+
+export { visitDateError, visitDateBounds, MAX_DAYS_AHEAD } from './visit-date';
 
 export const VISIT_SLOTS = ['11:00', '13:00', '15:00', '17:00'] as const;
 export const INTERESTS = ['heirloom', 'form', 'custom', 'restoration', 'not-sure'] as const;
-const MAX_DAYS_AHEAD = 60;
 
 export type ActionResult =
   | { ok: true }
@@ -16,23 +18,11 @@ export function normalisePhone(raw: string): string | null {
   return /^[6-9]\d{9}$/.test(digits) ? digits : null;
 }
 
-/** Today's date in India as YYYY-MM-DD. */
-function todayInIndia(now: Date): string {
-  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(now);
-}
-
-/** Returns an error message for a showroom visit date, or null if the date is fine. */
-export function visitDateError(iso: string, now: Date = new Date()): string | null {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso) || Number.isNaN(Date.parse(`${iso}T00:00:00Z`))) {
-    return 'Please pick a valid date.';
-  }
-  const day = Date.parse(`${iso}T00:00:00Z`);
-  const today = Date.parse(`${todayInIndia(now)}T00:00:00Z`);
-  const diffDays = Math.round((day - today) / 86_400_000);
-  if (diffDays < 1) return 'Please pick a date from tomorrow.';
-  if (diffDays > MAX_DAYS_AHEAD) return `Please pick a date within the next ${MAX_DAYS_AHEAD} days.`;
-  if (new Date(day).getUTCDay() === 1) return "We're closed on Mondays. Please pick another day.";
-  return null;
+/** First error message per field, from a failed Zod parse. */
+export function fieldErrorsFrom(issues: readonly { path: readonly PropertyKey[]; message: string }[]): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const issue of issues) out[String(issue.path[0] ?? 'form')] ??= issue.message;
+  return out;
 }
 
 const name = z.string().trim().min(2, 'Please enter your name.').max(80, 'That name is too long.');

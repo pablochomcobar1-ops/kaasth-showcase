@@ -1,7 +1,7 @@
 'use server';
 
 import { products } from '@/content/products';
-import { enquirySchema, type ActionResult } from '@/lib/forms';
+import { enquirySchema, fieldErrorsFrom, type ActionResult } from '@/lib/forms';
 import { deliverLead } from '@/lib/leads';
 
 /** Product enquiry. Validates on the server; a filled honeypot gets a silent fake success and nothing is sent. */
@@ -11,12 +11,7 @@ export async function submitEnquiry(_prev: ActionResult | null, fd: FormData): P
 
   const parsed = enquirySchema.safeParse(raw);
   if (!parsed.success) {
-    const fieldErrors: Record<string, string> = {};
-    for (const issue of parsed.error.issues) {
-      const key = String(issue.path[0] ?? 'form');
-      fieldErrors[key] ??= issue.message;
-    }
-    return { ok: false, fieldErrors };
+    return { ok: false, fieldErrors: fieldErrorsFrom(parsed.error.issues) };
   }
   const product = products.find((p) => p.slug === parsed.data.productSlug);
   if (!product) return { ok: false, fieldErrors: { form: 'That piece is no longer listed.' } };
