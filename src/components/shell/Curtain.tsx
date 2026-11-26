@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { gsap, prefersReducedMotion, registerGsap, EASE } from '@/lib/motion';
 
 let firstLoad = true;
@@ -11,14 +11,16 @@ let firstLoad = true;
  */
 export function Curtain() {
   const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
+  // Hidden by default in CSS, so it never covers the page without JavaScript.
+  // useLayoutEffect shows it before the browser paints the new page, then sweeps it away.
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (firstLoad || prefersReducedMotion()) {
       firstLoad = false;
-      el.style.display = 'none';
       return;
     }
+    el.style.display = 'block';
     registerGsap();
     const tween = gsap.fromTo(el, { yPercent: 0 }, { yPercent: -110, duration: 0.7, ease: EASE.drift, delay: 0.05, onComplete: () => { el.style.display = 'none'; } });
     return () => { tween.kill(); };

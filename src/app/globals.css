@@ -108,9 +108,37 @@
 .cursor-ring { width: 26px; height: 26px; border: 1px solid var(--color-brand-accent); border-radius: 999px; transition: width var(--duration-ui) var(--ease-unveil), height var(--duration-ui) var(--ease-unveil), background-color var(--duration-ui); will-change: transform; }
 .cursor-ring[data-hot='true'] { width: 54px; height: 54px; background: rgb(201 164 106 / 0.12); }
 
-.curtain { color: var(--color-brand); background: var(--color-brand); }
+.curtain { display: none; color: var(--color-brand); background: var(--color-brand); }
 
 .mobile-menu[data-state='open'] { animation: menu-in var(--duration-reveal) var(--ease-unveil); }
 .mobile-menu[data-state='open'] .menu-item { animation: menu-item-in var(--duration-reveal) var(--ease-unveil) both; animation-delay: calc(var(--i) * 60ms + 120ms); }
 @keyframes menu-in { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes menu-item-in { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Home hero: Jharokha Open ---------- */
+.hero { --mw: min(62vw, 28svh); --mh: calc(min(62vw, 28svh) * 1.3); --arch-y: 34%; }
+@media (max-width: 767px) and (max-height: 700px) { .hero { --mw: min(62vw, 22svh); --mh: calc(min(62vw, 22svh) * 1.3); --arch-y: 30%; } .hero-tagline { display: none; } }
+@media (min-width: 768px) { .hero { --mw: min(30vw, 420px); --mh: calc(min(30vw, 420px) * 1.3); --arch-y: 50%; } }
+.hero-mask {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130' preserveAspectRatio='none'%3E%3Cpath d='M0 130V52C0 30 28 22 50 0C72 22 100 30 100 52V130Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130' preserveAspectRatio='none'%3E%3Cpath d='M0 130V52C0 30 28 22 50 0C72 22 100 30 100 52V130Z'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-size: var(--mw) var(--mh); mask-size: var(--mw) var(--mh);
+  -webkit-mask-position: 50% var(--arch-y); mask-position: 50% var(--arch-y);
+  will-change: mask-size;
+}
+.hero-frame { color: rgb(201 164 106 / 0.45); width: calc(var(--mw) + 32px); height: calc(var(--mh) + 24px); left: 50%; top: var(--arch-y); transform: translate(-50%, calc(-1 * var(--arch-y))); }
+@media (min-width: 768px) { .hero-frame { top: 50%; transform: translate(-50%, -50%); } }
+.hero-label { top: calc(var(--arch-y) + var(--mh) * 0.5 + 28px); }
+@media (max-width: 767px) { .hero-frame { top: calc(var(--arch-y) - var(--mh) * 0.38 - 12px); transform: translate(-50%, 0); } .hero-label { top: calc(var(--arch-y) + var(--mh) * 0.62 + 18px); } }
+.hero-ghost { font-size: clamp(9rem, 26vw, 26rem); line-height: 1; opacity: 0.08; }
+.hero-room-form { opacity: 0; }
+.hero-room-form[data-show='true'] { opacity: 1; }
+.hero-end { opacity: 0; visibility: hidden; }
+.hero-beam {
+  background:
+    linear-gradient(100deg, transparent 22%, rgb(233 200 143 / 0.10) 38%, rgb(233 200 143 / 0.04) 52%, transparent 62%),
+    radial-gradient(55% 50% at 50% 46%, rgb(201 164 106 / 0.16), transparent 70%),
+    radial-gradient(40% 40% at 10% 92%, rgb(120 60 25 / 0.22), transparent 70%);
+}
+.hero-cue::after { content: ''; width: 1px; height: 34px; background: linear-gradient(var(--color-brand-accent), transparent); }
