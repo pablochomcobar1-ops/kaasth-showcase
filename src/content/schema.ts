@@ -26,7 +26,6 @@ export const productSchema = z.object({
   }),
   dimensionsCm: z.object({ w: z.number().positive(), d: z.number().positive(), h: z.number().positive() }),
   provenance: z.object({ era: z.string(), region: z.string(), restored: z.string() }).optional(),
-  model3d: z.string().startsWith('/').optional(),
   featured: z.boolean().optional(),
 });
 

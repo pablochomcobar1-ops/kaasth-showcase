@@ -5,7 +5,8 @@ import type { SiteConfig } from './schema';
  * To re-skin this demo for a client, edit these two files (and the logo/renders in /public).
  */
 export const siteConfig = {
-  mode: 'demo',
+  // demo = forms validate and show success, nothing is sent. Set SITE_MODE=live (server env) to email leads.
+  mode: process.env.SITE_MODE === 'live' ? 'live' : 'demo',
   credit: 'Designed & built by BSX Agency',
   demoBadge: 'Concept demo · BSX Agency',
   brand: {

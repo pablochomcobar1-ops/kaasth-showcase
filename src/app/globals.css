@@ -223,3 +223,12 @@
 .card-in { animation: card-in var(--duration-reveal) var(--ease-unveil) both; animation-delay: calc(var(--i, 0) * 60ms); }
 @keyframes card-in { from { opacity: 0; transform: translateY(18px); } }
 @media (prefers-reduced-motion: reduce) { .card-in { animation: none; } }
+
+/* ---------- Product page (Task 6) ---------- */
+.dialog-overlay { animation: fade-in var(--duration-ui) var(--ease-unveil); }
+.dialog-panel { animation: sheet-in var(--duration-reveal) var(--ease-unveil); }
+@media (min-width: 768px) { .dialog-panel { animation-name: pop-in; } }
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes sheet-in { from { transform: translateY(100%); } }
+@keyframes pop-in { from { opacity: 0; transform: translate(-50%, -48%) scale(0.98); } }
+@media (prefers-reduced-motion: reduce) { .dialog-overlay, .dialog-panel { animation: none; } }

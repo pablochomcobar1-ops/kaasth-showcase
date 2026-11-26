@@ -110,7 +110,7 @@ export const products: Product[] = [
     images: ['/products/walnut-lounge-chair-1.webp', '/products/walnut-lounge-chair-2.webp'],
     blurb: "Clean lines in solid walnut, joined the old way so it stays tight for decades. Made to order in Ahmedabad.",
     passport: { wood: "Solid walnut", joinery: "Domino joints", artisanHours: 28, finish: 'Natural oil', termiteTreated: true, warrantyYears: 10 },
-    dimensionsCm: { w: 78, d: 82, h: 74 }, featured: true, model3d: '/models/walnut-lounge-chair.glb',
+    dimensionsCm: { w: 78, d: 82, h: 74 }, featured: true,
   },
   {
     slug: 'low-sheesham-sofa', name: "Low Sheesham Sofa", collection: 'form', category: 'seating', wood: 'sheesham', priceFrom: 148000,

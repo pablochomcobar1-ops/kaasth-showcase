@@ -94,7 +94,7 @@ Background choices marked * still go through the background habit (3–4 option 
 | Empty state | message + Clear filters | fade | night |
 
 ### Product `/products/[slug]`
-Gallery (arch main image + thumbs) · title, collection, price · **Wood Passport** (+ provenance card for Heirloom) · dimensions · Enquire (form dialog or WhatsApp deep link) · **ChairViewer** (only `model3d` products; lazy R3F, drag to rotate, poster image first) · "You may also like" (3 cards).
+Gallery (arch main image + thumbs) · title, collection, price · **Wood Passport** (+ provenance card for Heirloom) · dimensions · Enquire (form dialog or WhatsApp deep link) · "You may also like" (3 cards).
 
 ### Services `/services`
 Four services (Custom-made · Antique restoration · Interior styling · Delivery & installation) as large alternating rows with arch images; each with a 3-step process; closing visit band.
@@ -181,7 +181,7 @@ Sections 2–8 from the map. Backgrounds marked * go through the preview sheet f
 Tests: `?collection=heirloom` shows only heirloom; `?category=seating&wood=teak` combines; no match shows EmptyState with "Clear filters" that resets the URL; filters are buttons with `aria-pressed`. Deliver.
 
 ### Task 6: Product detail + enquiry + chair viewer
-`generateStaticParams` from `products`; unknown slug → 404. `submitEnquiry` server action returns `ActionResult`; tests: valid input → `{ ok: true }`; missing consent → `fieldErrors.consent`; honeypot filled → `{ ok: true }` silently (no send). ChairViewer lazy (`next/dynamic`, `ssr: false`) with poster image, only when `model3d` exists. Deliver.
+`generateStaticParams` from `products`; unknown slug → 404. `submitEnquiry` server action returns `ActionResult`; tests: valid input → `{ ok: true }`; missing consent → `fieldErrors.consent`; honeypot filled → `{ ok: true }` silently (no send). Deliver.
 
 ### Task 7: Services · Task 8: About
 Static pages from `siteConfig.services` / `siteConfig.story`; timeline pin on desktop only. Tests: 4 services render; timeline starts at 1962. Deliver each.
