@@ -9,7 +9,7 @@ export function SmoothScroll() {
   useEffect(() => {
     registerGsap();
     if (prefersReducedMotion()) return;
-    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true, anchors: true });
     lenis.on('scroll', ScrollTrigger.update);
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);

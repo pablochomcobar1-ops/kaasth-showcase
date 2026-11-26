@@ -43,10 +43,10 @@ export const siteConfig = {
     { quote: 'We sat in the showroom, had chai, and left with a chair my father would have loved.', name: 'Farhan K.', city: 'Surat', piece: 'Teak Planter Chair' },
   ],
   services: [
-    { id: 'custom', title: 'Custom-made furniture', line: 'Your size, your wood, our hands.', steps: ['Visit and measure', 'Wood and sketch approval', 'Made, finished and delivered'] },
-    { id: 'restoration', title: 'Antique restoration', line: 'We bring old wood back without erasing its story.', steps: ['Inspect and document', 'Repair joints, treat for termites', 'Hand-finish and return with a provenance card'] },
-    { id: 'styling', title: 'Interior styling', line: 'One room or the whole home, old and new together.', steps: ['Home visit', 'Layout and piece list', 'Placement on delivery day'] },
-    { id: 'delivery', title: 'Delivery & installation', line: 'Wrapped, carried and set up by our own team.', steps: ['Date that suits you', 'Blanket-wrapped transport', 'Set-up and care walkthrough'] },
+    { id: 'custom', title: 'Custom-made furniture', titleDeva: 'आपके नाप से', line: 'Your size, your wood, our hands.', steps: ['Visit and measure', 'Wood and sketch approval', 'Made, finished and delivered'] },
+    { id: 'restoration', title: 'Antique restoration', titleDeva: 'मरम्मत', line: 'We bring old wood back without erasing its story.', steps: ['Inspect and document', 'Repair joints, treat for termites', 'Hand-finish and return with a provenance card'] },
+    { id: 'styling', title: 'Interior styling', titleDeva: 'सजावट', line: 'One room or the whole home, old and new together.', steps: ['Home visit', 'Layout and piece list', 'Placement on delivery day'] },
+    { id: 'delivery', title: 'Delivery & installation', titleDeva: 'घर तक', line: 'Wrapped, carried and set up by our own team.', steps: ['Date that suits you', 'Blanket-wrapped transport', 'Set-up and care walkthrough'] },
   ],
   story: [
     { year: 1962, title: 'A workshop in the pol', text: 'Our grandfather opens a small carpentry shop near Manek Chowk, repairing doors and charpais.' },

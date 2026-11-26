@@ -58,7 +58,7 @@ export const siteConfigSchema = z.object({
   nav: z.array(z.object({ label: z.string(), href: z.string().startsWith('/') })),
   reviews: z.array(review).min(3),
   reviewsNote: z.string(),
-  services: z.array(z.object({ id: slug, title: z.string(), line: z.string(), steps: z.array(z.string()).length(3) })).length(4),
+  services: z.array(z.object({ id: slug, title: z.string(), titleDeva: z.string(), line: z.string(), steps: z.array(z.string()).length(3) })).length(4),
   story: z.array(z.object({ year: z.number().int(), title: z.string(), text: z.string() })).min(3),
 });
 
