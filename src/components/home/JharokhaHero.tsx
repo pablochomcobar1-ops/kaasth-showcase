@@ -15,7 +15,7 @@ const ROOMS = {
 
 /** Art-directed room photo: landscape render on desktop, portrait render on phones (next/image optimises both). */
 function RoomPicture({ room, priority, className, show }: { room: (typeof ROOMS)[keyof typeof ROOMS]; priority?: boolean; className?: string; show?: boolean }) {
-  const common = { alt: room.alt, sizes: '100vw', priority, fill: true } as const;
+  const common = { alt: room.alt, sizes: '100vw', priority, fill: true, quality: 90 } as const;
   const { props: { srcSet: desktop } } = getImageProps({ ...common, src: `/renders/room-${room.name}.jpg` });
   const { props: { srcSet: mobile, ...rest } } = getImageProps({ ...common, src: `/renders/room-${room.name}-portrait.jpg` });
   return (
@@ -70,7 +70,12 @@ export function JharokhaHero() {
         { '--mw': () => `${big()}px`, '--mh': () => `${big() * 1.3}px`, ease: 'power2.in', duration: 0.62 },
         0.04,
       )
-      .to(q('[data-room="form"] img'), { autoAlpha: 1, duration: 0.3 }, 0.55)
+      .fromTo(
+        q('[data-room="form"] img'),
+        { autoAlpha: 1, clipPath: 'inset(0% 0% 0% 100%)' },
+        { clipPath: 'inset(0% 0% 0% 0%)', ease: 'power2.inOut', duration: 0.3 },
+        0.5,
+      )
       .to(q('[data-label="heirloom"]'), { autoAlpha: 0, duration: 0.12 }, 0.5)
       .fromTo(q('[data-label="form"]'), { autoAlpha: 0, y: 16 }, { autoAlpha: 1, y: 0, duration: 0.15 }, 0.66)
       .fromTo(q('[data-end-copy]'), { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.2 }, 0.76);
