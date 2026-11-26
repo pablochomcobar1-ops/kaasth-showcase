@@ -1,0 +1,38 @@
+diff --git a/renderer/src/lib.rs b/renderer/src/lib.rs
+index 2588d8a..923bcb0 100644
+--- a/renderer/src/lib.rs
++++ b/renderer/src/lib.rs
+@@ -714,9 +714,31 @@ pub fn prepare_as(hwrt: bool, units: bool, sc: &mut scene::Scene, timings: &mut
+         desc::Exposure::Manual { ev100 } => *ev100,
+         desc::Exposure::Auto { max_ev100, .. } => *max_ev100,
+     };
++    // Kaasth patch: THREERT_TILE="ox,oy,s" renders one tile of a larger frame (off-axis "lens shift").
++    // ox, oy = tile centre in the full frame's NDC (-1..1, y up); s = tile height / full height.
++    // The shader builds rays as fwd + right*ndc.x*tan*aspect + up*ndc.y*tan, so shifting fwd and scaling tan is exact.
++    let (tile_fwd, tile_tan) = match std::env::var("THREERT_TILE").ok().and_then(|v| {
++        let p: Vec<f32> = v.split(',').filter_map(|x| x.trim().parse().ok()).collect();
++        if p.len() == 3 { Some((p[0], p[1], p[2])) } else { None }
++    }) {
++        Some((ox, oy, s)) => {
++            let t = cam.tan_half_fov;
++            let a_full = aspect * s / (sc.width as f32 / sc.height as f32 * s) * (sc.width as f32 / sc.height as f32); // = aspect
++            let _ = a_full;
++            // full-frame aspect is passed separately so tiles can have their own aspect
++            let a_frame: f32 = std::env::var("THREERT_FRAME_ASPECT").ok().and_then(|v| v.parse().ok()).unwrap_or(aspect);
++            let f = [
++                cam.forward.x + cam.right.x * ox * t * a_frame + cam.up.x * oy * t,
++                cam.forward.y + cam.right.y * ox * t * a_frame + cam.up.y * oy * t,
++                cam.forward.z + cam.right.z * ox * t * a_frame + cam.up.z * oy * t,
++            ];
++            (f, t * s)
++        }
++        None => ([cam.forward.x, cam.forward.y, cam.forward.z], cam.tan_half_fov),
++    };
+     let params = gpu::Params {
+-        cam_pos: [cam.position.x, cam.position.y, cam.position.z, cam.tan_half_fov],
+-        cam_fwd: [cam.forward.x, cam.forward.y, cam.forward.z, aspect],
++        cam_pos: [cam.position.x, cam.position.y, cam.position.z, tile_tan],
++        cam_fwd: [tile_fwd[0], tile_fwd[1], tile_fwd[2], aspect],
+         cam_right: [cam.right.x, cam.right.y, cam.right.z, lens_radius],
+         cam_up: [cam.up.x, cam.up.y, cam.up.z, focus],
+         size: [sc.width, sc.height, 0, rng_seed()],

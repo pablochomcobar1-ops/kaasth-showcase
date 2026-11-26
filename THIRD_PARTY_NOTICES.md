@@ -20,4 +20,4 @@ Cormorant Garamond, Instrument Sans, Tiro Devanagari Hindi: SIL Open Font Licens
 "Tabla Rhythmic Raga Pulse" (Pixabay): Pixabay Content License.
 
 ## 3D models (renders and product viewer)
-Poly Haven models, CC0 1.0 (public domain): see renders-src/README.md for the list. No attribution required; credited as good practice.
+Poly Haven models and textures (red_sandstone_tiles, yellow_plaster), CC0 1.0 (public domain): see renders-src/README.md. No attribution required; credited as good practice.

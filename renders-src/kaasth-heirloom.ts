@@ -1,5 +1,5 @@
 
-import { Scene, PerspectiveCamera, Mesh, BoxGeometry, SphereGeometry, CylinderGeometry, MeshStandardMaterial, DirectionalLight, SkyAtmosphere, Color, Group, GLTFModel } from "@threert/scene";
+import { Scene, PerspectiveCamera, Mesh, BoxGeometry, SphereGeometry, CylinderGeometry, MeshStandardMaterial, DirectionalLight, SkyAtmosphere, Color, Group, GLTFModel, SurfaceMaterial, Texture } from "@threert/scene";
 // Kaasth hero room (BSX Agency). Variant: heirloom
 export default function build() {
   const VARIANT = "heirloom";
@@ -10,13 +10,16 @@ export default function build() {
   scene.add(sun);
   scene.environment = new SkyAtmosphere({ sun });
   const M = (name: string, color: number, roughness: number, extra: any = {}) => new MeshStandardMaterial({ name, color, roughness, ...extra });
-  const plaster = M("limewash", 0xe6d8c3, 0.95);
-  const stone = M("kota_stone", 0xb9a68a, 0.55);
+  const tex = (id: string, map: "diff" | "nor_gl" | "rough", res = "1k") =>
+    new Texture(`assets/polyhaven/tex/${id}/${id}_${map}_${res}.jpg`, map === "diff" ? "srgb" : "linear");
+  // Limewash walls: smooth plaster scan tinted ivory. Floor: red sandstone slabs (2k for close-up detail).
+  const plaster = new SurfaceMaterial({ name: "limewash", map: new Texture("assets/polyhaven/tex/yellow_plaster/kaasth_limewash_diff_1k.jpg", "srgb"), normalMap: tex("yellow_plaster", "nor_gl"), roughnessMap: tex("yellow_plaster", "rough"), color: [1, 1, 1], roughness: 1, normalScale: 0.3, worldScale: 2.2 });
+  const stone = new SurfaceMaterial({ name: "red_sandstone", map: new Texture("assets/polyhaven/tex/red_sandstone_tiles/kaasth_sandstone_diff_2k.jpg", "srgb"), normalMap: tex("red_sandstone_tiles", "nor_gl", "2k"), roughnessMap: tex("red_sandstone_tiles", "rough", "2k"), color: [1, 1, 1], roughness: 0.8, worldScale: 1.8 });
   const teak = M("teak_dark", 0x3a2213, 0.42);
   const oak = M("oak_light", 0xc39868, 0.5);
   const brass = new MeshStandardMaterial({ name: "brass", color: new Color().setRGB(0.86, 0.68, 0.36), metalness: 1, roughness: 0.28 });
   const red = M("cotton_red", 0x7a2018, 0.95);
-  const indigo = M("rug_indigo", 0x2a2f4a, 0.98);
+  const indigo = M("rug_indigo", 0x1c2140, 0.98);
   const madder = M("rug_madder", 0x6e2419, 0.98);
   const boucle = M("boucle", 0xebe3d6, 0.98);
   const oat = M("rug_oat", 0xd3c4aa, 0.98);
@@ -31,7 +34,7 @@ export default function build() {
   box("wall_back", W + 2*T, H, T, 0, H/2, -D/2 - T/2, plaster);
   box("wall_front", W + 2*T, H, T, 0, H/2, D/2 + T/2, plaster);
   box("wall_left", T, H, D, -W/2 - T/2, H/2, 0, plaster);
-  box("courtyard", 40, 0.1, 40, W/2 + 20.3, -0.05, 0, M("courtyard_sandstone", 0xc9a982, 0.85));
+  box("courtyard", 40, 0.1, 40, W/2 + 20.3, -0.05, 0, stone);
   // right wall with a tall window filled by a diamond jaali
   const wx = W/2 + T/2, winW = 2.2, winH = 2.3, sill = 0.45, wz = -0.9, zMin = -D/2, zMax = D/2;
   box("wr_a", T, H, wz - winW/2 - zMin, wx, H/2, (zMin + wz - winW/2)/2, plaster);
@@ -74,7 +77,11 @@ export default function build() {
   const camera = new PerspectiveCamera(48, 16/9, 0.05, 200);
   camera.position.set(-2.9, 1.45, 2.7);
   camera.lookAt(0.6, 0.95, -1.4);
-  camera.setManualExposure(10.2);
+  camera.setManualExposure(9.8);
   scene.add(camera);
-  return { scene, camera, options: { name: "kaasth-heirloom" } };
+  return { scene, camera, options: { name: "kaasth-heirloom", overrides: { post: {
+    bloom: { intensity: 0, threshold: 1.0, sizeScale: 3 },
+    vignette: 0, filmGrain: 0, chromaticAberration: 0,
+    colorGrading: { whiteTemp: 5900, saturation: 0.96, contrast: 1.1, shadowsGain: 0.97, highlightsGain: 1.0 },
+  } } } };
 }
