@@ -3,6 +3,7 @@
 import { useActionState, useId, useState } from 'react';
 import type { ActionResult } from '@/lib/forms';
 import { visitDateError } from '@/lib/visit-date';
+import { Turnstile } from '@/components/forms/Turnstile';
 
 type Action = (prev: ActionResult | null, fd: FormData) => Promise<ActionResult>;
 
@@ -98,6 +99,7 @@ export function BookingForm({ action, min, max, demo }: { action: Action; min: s
         </label>
         <Err k="consent" />
       </div>
+      <Turnstile />
       {state && !state.ok && state.message && <p role="alert" className="text-body02 text-error">{state.message}</p>}
       <button type="submit" disabled={pending} className="justify-self-start rounded-pill bg-brand-accent px-8 py-4 text-caption01 font-medium uppercase tracking-[0.14em] text-background shadow-[var(--shadow-brass-glow)] transition-colors duration-[var(--duration-ui)] hover:bg-brand-accent-strong active:scale-[0.97] disabled:opacity-60">
         {pending ? 'Booking…' : 'Book my visit'}

@@ -3,6 +3,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { useActionState, useId, useState } from 'react';
 import type { ActionResult } from '@/lib/forms';
+import { Turnstile } from '@/components/forms/Turnstile';
 
 type Action = (prev: ActionResult | null, fd: FormData) => Promise<ActionResult>;
 
@@ -72,6 +73,7 @@ export function EnquiryDialog({ action, productSlug, productName, demo }: { acti
                 </label>
                 <Err k="consent" />
               </div>
+              <Turnstile />
               {state && !state.ok && state.message && <p role="alert" className="text-body02 text-error">{state.message}</p>}
               <button type="submit" disabled={pending} className="mt-2 rounded-pill bg-brand-accent px-7 py-4 text-caption01 font-medium uppercase tracking-[0.14em] text-background transition-colors duration-[var(--duration-ui)] hover:bg-brand-accent-strong disabled:opacity-60">
                 {pending ? 'Sending…' : 'Send enquiry'}

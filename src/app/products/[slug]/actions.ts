@@ -3,11 +3,15 @@
 import { products } from '@/content/products';
 import { enquirySchema, fieldErrorsFrom, type ActionResult } from '@/lib/forms';
 import { deliverLead } from '@/lib/leads';
+import { guardLead } from '@/lib/guard';
 
 /** Product enquiry. Validates on the server; a filled honeypot gets a silent fake success and nothing is sent. */
 export async function submitEnquiry(_prev: ActionResult | null, fd: FormData): Promise<ActionResult> {
   const raw = Object.fromEntries([...fd.entries()].map(([k, v]) => [k, typeof v === 'string' ? v : '']));
   if (raw.company) return { ok: true };
+
+  const blocked = await guardLead('enquiry', fd);
+  if (blocked) return { ok: false, fieldErrors: {}, message: blocked };
 
   const parsed = enquirySchema.safeParse(raw);
   if (!parsed.success) {

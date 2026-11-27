@@ -2,11 +2,15 @@
 
 import { bookingSchema, fieldErrorsFrom, type ActionResult } from '@/lib/forms';
 import { deliverLead } from '@/lib/leads';
+import { guardLead } from '@/lib/guard';
 
 /** Showroom visit booking. Server re-checks every rule (date window, Mondays, slots); honeypot gets a silent fake success. */
 export async function bookVisit(_prev: ActionResult | null, fd: FormData): Promise<ActionResult> {
   const raw = Object.fromEntries([...fd.entries()].map(([k, v]) => [k, typeof v === 'string' ? v : '']));
   if (raw.company) return { ok: true };
+
+  const blocked = await guardLead('booking', fd);
+  if (blocked) return { ok: false, fieldErrors: {}, message: blocked };
 
   const parsed = bookingSchema(new Date()).safeParse({ email: '', ...raw });
   if (!parsed.success) return { ok: false, fieldErrors: fieldErrorsFrom(parsed.error.issues) };

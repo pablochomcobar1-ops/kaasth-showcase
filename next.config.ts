@@ -13,6 +13,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Our forms send well under 4 KB; reject anything bigger before it reaches our code.
+  experimental: { serverActions: { bodySizeLimit: '32kb' } },
   images: { formats: ['image/avif', 'image/webp'], qualities: [75, 90] },
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }];

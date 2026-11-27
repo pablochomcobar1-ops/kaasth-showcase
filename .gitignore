@@ -4,8 +4,8 @@ node_modules/
 .next/
 out/
 # secrets: never commit these
-.env
-.env*.local
+.env*
+!.env.example
 # system files
 .DS_Store
 Thumbs.db

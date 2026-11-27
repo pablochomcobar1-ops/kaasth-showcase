@@ -25,8 +25,12 @@ export function fieldErrorsFrom(issues: readonly { path: readonly PropertyKey[];
   return out;
 }
 
-const name = z.string().trim().min(2, 'Please enter your name.').max(80, 'That name is too long.');
-const phone = z.string().transform((value, ctx) => {
+/** Control characters (except tab/newline in messages) have no place in a name or note, and can break email headers. */
+const CONTROL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/;
+const NAME_CONTROL = /[\u0000-\u001F\u007F]/;
+const name = z.string().trim().min(2, 'Please enter your name.').max(80, 'That name is too long.')
+  .refine((v) => !NAME_CONTROL.test(v), 'Please use letters only in your name.');
+const phone = z.string().max(24, 'Please enter a 10-digit Indian mobile number.').transform((value, ctx) => {
   const n = normalisePhone(value);
   if (!n) {
     ctx.addIssue({ code: 'custom', message: 'Please enter a 10-digit Indian mobile number.' });
@@ -35,7 +39,8 @@ const phone = z.string().transform((value, ctx) => {
   return n;
 });
 const email = z.union([z.literal(''), z.email('Please enter a valid email or leave it empty.')]);
-const message = z.string().trim().max(500, 'Please keep the message under 500 characters.').optional().default('');
+const message = z.string().trim().max(500, 'Please keep the message under 500 characters.')
+  .refine((v) => !CONTROL.test(v), 'Please remove any unusual characters.').optional().default('');
 const consent = z.literal('on', { error: 'Please agree so we can contact you.' });
 /** Honeypot: real people never see or fill this field. */
 const company = z.string().max(0).optional().default('');
