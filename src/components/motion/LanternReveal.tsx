@@ -11,25 +11,33 @@ type Props = { as?: ElementType; children: ReactNode; className?: string; delay?
  */
 export function LanternReveal({ as: Tag = 'div', children, className, delay = 0, onScroll = true }: Props) {
   const ref = useRef<HTMLElement>(null);
-  useGSAP(() => {
+  useGSAP((_ctx, contextSafe) => {
     registerGsap();
     const el = ref.current;
-    if (!el || prefersReducedMotion()) return;
-    const split = SplitText.create(el, {
-      type: 'lines',
-      mask: 'lines',
-      autoSplit: true,
-      onSplit: (self) =>
-        gsap.from(self.lines, {
-          yPercent: 110,
-          duration: DURATION.reveal,
-          ease: EASE.unveil,
-          stagger: 0.08,
-          delay,
-          scrollTrigger: onScroll ? { trigger: el, start: 'top 85%', once: true } : undefined,
-        }),
+    if (!el || prefersReducedMotion() || !contextSafe) return;
+    let split: SplitText | undefined;
+    const run = contextSafe(() => {
+      split = SplitText.create(el, {
+        type: 'lines',
+        mask: 'lines',
+        autoSplit: true,
+        onSplit: (self) =>
+          gsap.from(self.lines, {
+            yPercent: 110,
+            duration: DURATION.reveal,
+            ease: EASE.unveil,
+            stagger: 0.08,
+            delay,
+            scrollTrigger: onScroll ? { trigger: el, start: 'top 85%', once: true } : undefined,
+          }),
+      });
     });
-    return () => split.revert();
+    // Splitting text measures layout, so below-the-fold headings wait until they are about to scroll into view.
+    // The reveal itself still starts at "top 85%", so nothing looks different; startup work drops a lot.
+    if (!onScroll) { run(); return () => split?.revert(); }
+    const io = new IntersectionObserver(([e]) => { if (e?.isIntersecting) { io.disconnect(); run(); } }, { rootMargin: '0px 0px 40% 0px' });
+    io.observe(el);
+    return () => { io.disconnect(); split?.revert(); };
   }, { scope: ref });
   return <Tag ref={ref} className={className}>{children}</Tag>;
 }

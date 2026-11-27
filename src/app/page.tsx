@@ -8,7 +8,7 @@ import { VisitBand } from '@/components/home/VisitBand';
 
 export default function Home() {
   return (
-    <main>
+    <>
       <JharokhaHero />
       <TwoCollections />
       <FeaturedPieces />
@@ -16,6 +16,6 @@ export default function Home() {
       <HeirloomStory />
       <Reviews />
       <VisitBand />
-    </main>
+    </>
   );
 }

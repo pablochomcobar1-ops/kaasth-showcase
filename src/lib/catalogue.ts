@@ -1,4 +1,5 @@
-import { CATEGORIES, COLLECTIONS, WOODS, type Category, type Collection, type Product, type Wood } from '@/content/schema';
+import { CATEGORIES, COLLECTIONS, WOODS, type Category, type Collection, type Wood } from '@/content/enums';
+import type { Product } from '@/content/schema';
 
 export type Filters = { collection?: Collection; category?: Category; wood?: Wood };
 export const FILTER_KEYS = ['collection', 'category', 'wood'] as const;

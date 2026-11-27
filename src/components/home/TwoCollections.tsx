@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { siteConfig } from '@/content/site.config';
-import { COLLECTIONS } from '@/content/schema';
+import { COLLECTIONS } from '@/content/enums';
 import { ArchWipe } from '@/components/motion/ArchWipe';
 import { SectionHead } from './SectionHead';
 

@@ -18,6 +18,7 @@ export function DemoBadge() {
   }, []);
 
   return (
+    <aside aria-label="Concept demo notice">
     <a
       href="https://buildscalex.in"
       target="_blank"
@@ -33,5 +34,6 @@ export function DemoBadge() {
       <span className="sr-only sm:not-sr-only">{siteConfig.demoBadge}</span>
       <span aria-hidden className="sm:hidden">Demo · BSX</span>
     </a>
+    </aside>
   );
 }

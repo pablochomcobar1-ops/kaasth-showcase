@@ -26,7 +26,8 @@ export default async function ProductsPage({ searchParams }: { searchParams: Pro
   return (
     <>
       <FilmBanner />
-      <section aria-label="Catalogue" className="container-page pb-[clamp(80px,10vw,160px)]">
+      <section aria-labelledby="catalogue-title" className="container-page pb-[clamp(80px,10vw,160px)]">
+        <h2 id="catalogue-title" className="sr-only">All pieces</h2>
         <CatalogueControls filters={filters} counts={facetCounts(filters)} total={products.length}>
           <p aria-live="polite" className="mt-8 text-caption01 uppercase tracking-[0.16em] text-foreground-subtle">
             Showing {list.length} of {products.length} pieces

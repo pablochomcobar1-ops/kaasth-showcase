@@ -2,7 +2,7 @@
 
 import { useTransition, type ReactNode } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { COLLECTIONS, CATEGORIES, WOODS } from '@/content/schema';
+import { COLLECTIONS, CATEGORIES, WOODS } from '@/content/enums';
 import { CATEGORY_LABEL, WOOD_LABEL } from '@/content/labels';
 import { filtersToQuery, hasFilters, toggleFilter, type FilterKey, type Filters } from '@/lib/catalogue';
 

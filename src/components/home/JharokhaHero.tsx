@@ -58,7 +58,8 @@ export function JharokhaHero() {
 
     const tl = gsap.timeline({
       defaults: { ease: 'none' },
-      scrollTrigger: { trigger: el, start: 'top top', end: () => `+=${window.innerHeight * 1.5}`, pin: true, scrub: 0.8, invalidateOnRefresh: true },
+      // The hero stays in view with CSS sticky inside a tall track (no JS pin), so the DOM is never re-wrapped.
+      scrollTrigger: { trigger: el.parentElement, start: 'top top', end: 'bottom bottom', scrub: 0.8, invalidateOnRefresh: true },
     });
     tl.to(q('[data-hero-copy]'), { autoAlpha: 0, y: -40, duration: 0.22 }, 0)
       .to(q('[data-ghost]'), { autoAlpha: 0, scale: 1.08, duration: 0.3 }, 0)
@@ -82,7 +83,8 @@ export function JharokhaHero() {
   }, { scope: root });
 
   return (
-    <section ref={root} aria-labelledby="hero-title" className="hero relative h-[100svh] min-h-[620px] overflow-hidden bg-background">
+    <div className="hero-track relative">
+    <section ref={root} aria-labelledby="hero-title" className="hero sticky top-0 h-[100svh] min-h-[620px] overflow-hidden bg-background">
       {/* light + dust */}
       <div aria-hidden className="hero-beam pointer-events-none absolute inset-0" />
       <DustCanvas className="absolute inset-0 h-full w-full" />
@@ -154,5 +156,6 @@ export function JharokhaHero() {
         Scroll · the room changes
       </p>
     </section>
+    </div>
   );
 }

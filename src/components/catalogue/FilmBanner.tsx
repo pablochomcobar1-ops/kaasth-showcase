@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { LoopVideo } from '@/components/home/LoopVideo';
 import { LanternReveal } from '@/components/motion/LanternReveal';
 
@@ -5,7 +6,9 @@ import { LanternReveal } from '@/components/motion/LanternReveal';
 export function FilmBanner() {
   return (
     <header className="relative flex min-h-[62svh] items-end overflow-hidden pb-14 pt-[140px] md:min-h-[70svh] md:pb-20">
-      <LoopVideo src="/video/form-room" poster="/video/form-room-poster.jpg" label="A calm modern living room with solid wood furniture in afternoon sun" className="absolute inset-0 size-full object-cover" />
+      {/* Optimised still loads first and stays the largest paint; the video (inset 1px, same picture) fades in over it. */}
+      <Image src="/video/form-room-poster.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
+      <LoopVideo src="/video/form-room" label="A calm modern living room with solid wood furniture in afternoon sun" className="absolute inset-px size-[calc(100%-2px)] object-cover" />
       <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(90deg,rgb(18_13_9/0.88),rgb(18_13_9/0.25)_65%),linear-gradient(transparent_45%,var(--color-background))]" />
       <div className="container-page relative">
         <p className="text-caption01 uppercase tracking-[0.16em] text-brand-accent">

@@ -7,7 +7,7 @@ import { Turnstile } from '@/components/forms/Turnstile';
 
 type Action = (prev: ActionResult | null, fd: FormData) => Promise<ActionResult>;
 
-const field = 'mt-2 w-full rounded-card border border-border bg-background px-4 py-3 text-body01 text-foreground placeholder:text-foreground-subtle focus:border-brand-accent focus:outline-none aria-[invalid=true]:border-error';
+const field = 'mt-2 w-full rounded-card border border-border bg-background px-4 py-3 text-body01 text-foreground placeholder:text-foreground-subtle focus:border-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus:ring-2 focus:ring-brand-accent/30 focus-within:ring-2 focus-within:ring-brand-accent/40 aria-[invalid=true]:border-error';
 
 /** "Enquire about this piece" button + dialog with the enquiry form (server action, works without JS too). */
 export function EnquiryDialog({ action, productSlug, productName, demo }: { action: Action; productSlug: string; productName: string; demo: boolean }) {

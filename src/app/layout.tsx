@@ -39,7 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </a>
         <SmoothScroll />
         <Nav />
-        <div id="main">{children}</div>
+        <main id="main" tabIndex={-1} className="outline-none">{children}</main>
         <Footer />
         <DemoBadge />
         <Grain />

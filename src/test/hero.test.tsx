@@ -36,7 +36,7 @@ describe('JharokhaHero', () => {
     expect(screen.getByAltText(/modern solid-wood armchairs/i)).toBeInTheDocument();
   });
 
-  it('with reduced motion, swaps rooms with a button instead of a scroll pin', async () => {
+  it('with reduced motion, swaps rooms with a button instead of scroll', async () => {
     setReducedMotion(true);
     const user = userEvent.setup();
     const { container } = render(<JharokhaHero />);

@@ -11,7 +11,7 @@ const SLOTS = ['11:00', '13:00', '15:00', '17:00'] as const;
 const INTERESTS = [
   ['heirloom', 'Heirloom pieces'], ['form', 'Modern Form pieces'], ['custom', 'Custom-made'], ['restoration', 'Restoring my own piece'], ['not-sure', 'Just looking'],
 ] as const;
-const field = 'mt-2 w-full rounded-card border border-border bg-background px-4 py-3 text-body01 text-foreground placeholder:text-foreground-subtle focus:border-brand-accent focus:outline-none aria-[invalid=true]:border-error [color-scheme:dark]';
+const field = 'mt-2 w-full rounded-card border border-border bg-background px-4 py-3 text-body01 text-foreground placeholder:text-foreground-subtle focus:border-brand-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent/50 focus:ring-2 focus:ring-brand-accent/30 focus-within:ring-2 focus-within:ring-brand-accent/40 aria-[invalid=true]:border-error [color-scheme:dark]';
 
 const prettyDate = (iso: string) => new Date(`${iso}T00:00:00`).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
 

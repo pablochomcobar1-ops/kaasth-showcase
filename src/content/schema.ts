@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
-export const COLLECTIONS = ['heirloom', 'form'] as const;
-export const CATEGORIES = ['living', 'dining', 'bedroom', 'seating', 'storage', 'decor'] as const;
-export const WOODS = ['sheesham', 'teak', 'oak', 'walnut', 'mango', 'rosewood'] as const;
+import { CATEGORIES, COLLECTIONS, WOODS } from './enums';
+
+export { CATEGORIES, COLLECTIONS, WOODS } from './enums';
+export type { Category, Collection, Wood } from './enums';
 
 const slug = z.string().regex(/^[a-z0-9-]+$/);
 
@@ -64,6 +65,3 @@ export const siteConfigSchema = z.object({
 
 export type Product = z.infer<typeof productSchema>;
 export type SiteConfig = z.infer<typeof siteConfigSchema>;
-export type Collection = (typeof COLLECTIONS)[number];
-export type Category = (typeof CATEGORIES)[number];
-export type Wood = (typeof WOODS)[number];

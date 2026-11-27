@@ -28,7 +28,6 @@ export function TreeRings({ eras }: { eras: Era[] }) {
         gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 80%', end: 'center 55%', scrub: 0.6 } })
           .to(q(`[data-ring="${i}"]`), { strokeDashoffset: 0, ease: 'none' })
           .to(q(`[data-label="${i}"]`), { autoAlpha: 1, duration: 0.25 }, 0.75);
-        gsap.fromTo(el, { autoAlpha: 0.3 }, { autoAlpha: 1, scrollTrigger: { trigger: el, start: 'top 70%', end: 'center 55%', scrub: true } });
       });
     });
     return () => mm.revert();
