@@ -9,13 +9,18 @@ import { SmoothScroll } from '@/components/effects/SmoothScroll';
 import { SmokeCursor } from '@/components/effects/SmokeCursor';
 import { CursorDot } from '@/components/effects/CursorDot';
 import { Grain } from '@/components/effects/Grain';
+import { siteUrl } from '@/lib/site-url';
 import './globals.css';
 
 const { brand } = siteConfig;
+const description = `Hand-carved heirlooms and modern solid-wood furniture from one ${brand.city} workshop since ${brand.established}. Every piece comes with a Wood Passport.`;
 
 export const metadata: Metadata = {
   title: { default: `${brand.name} · ${brand.tagline}`, template: `%s · ${brand.name}` },
-  description: `Hand-carved heirlooms and modern solid-wood furniture from one ${brand.city} workshop since ${brand.established}. Every piece comes with a Wood Passport.`,
+  description,
+  metadataBase: new URL(siteUrl),
+  openGraph: { type: 'website', siteName: brand.name, locale: 'en_IN', title: `${brand.name} · ${brand.tagline}`, description },
+  twitter: { card: 'summary_large_image' },
   // Demo brand: keep it out of search results until BSX decides otherwise.
   robots: siteConfig.mode === 'demo' ? { index: false, follow: false } : undefined,
   icons: { icon: '/brand/kaasth-symbol-small.svg' },
